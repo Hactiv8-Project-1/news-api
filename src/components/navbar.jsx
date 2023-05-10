@@ -11,6 +11,7 @@ function NavBar() {
             <Nav.Link as={Link} to='/'>Indonesia</Nav.Link>
             <Nav.Link as={Link} to='/programming'>Programming</Nav.Link>
             <Nav.Link as={Link} to='/covid-19'>Covid-19</Nav.Link>
+            <Nav.Link as={Link} to='/saved'>Saved</Nav.Link>
           </Nav>
           <Form className="d-flex">
             <Form.Control
@@ -25,6 +26,6 @@ function NavBar() {
         </Navbar>
         </div>
     );
-};
+}
 
 export default NavBar;

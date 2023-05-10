@@ -4,6 +4,7 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 
 const Covid19 = () => {
     const [data3, setData3] = useState({})
+    const [savedArticles, setSavedArticles] = useState(JSON.parse(localStorage.getItem('savedArticles')) || []);
 
     const getData = async () => {
       try {
@@ -20,30 +21,54 @@ const Covid19 = () => {
         getData();
     }, []);
 
+    const handleSave = (article) => {
+      const isArticleSaved = savedArticles.some(savedArticle => savedArticle.title === article.title);
+      if (isArticleSaved) {
+        const newSavedArticles = savedArticles.filter(savedArticle => savedArticle.title !== article.title);
+        setSavedArticles(newSavedArticles);
+        localStorage.setItem('savedArticles', JSON.stringify(newSavedArticles));
+        article.isSaved = false;
+      } else {
+        const newSavedArticles = [...savedArticles, article];
+        setSavedArticles(newSavedArticles);
+        localStorage.setItem('savedArticles', JSON.stringify(newSavedArticles));
+        article.isSaved = true;
+      }
+    };
+
     return (
-        <div>
+      <div>
         <Container>
-        <h1  style={{textAlign: "center"}}>Covid-19 News</h1> 
-            <hr />
-            <Row>
-              {data3.articles && data3.articles.map((article) => (
-              <Col md={4} className="mb-5">
-                <div key={article.title}>
-                  <p>{article.source.name}</p>
-                  <h3>{article.title}</h3>
-                  <p>{article.author}</p>
-                  <p>{article.description}</p>
-                  <Button variant="info">
-                    <a href={article.url} target="_blank" rel="noopener noreferrer" style={{color: "#000"}}>News Page</a>
-                  </Button>
-                  <Button style={{color: "#FFF"}} className="ms-2">Save</Button>
-                </div>
-              </Col>
-              ))}
-            </Row>
+          <h1 style={{textAlign: "center"}}>Indonesia News</h1> 
+          <hr />
+          <Row>
+            {data3.articles && data3.articles.map((article) => {
+              const isArticleSaved = savedArticles.some(savedArticle => savedArticle.title === article.title);
+              article.isSaved = isArticleSaved;
+              return (
+                <Col md={4} className="mb-5">
+                  <div key={article.title}>
+                    <p>{article.source.name}</p>
+                    <h3>{article.title}</h3>
+                    <p>{article.author}</p>
+                    <p>{article.description}</p>
+                    <Button variant="info">
+                      <a href={article.url} target="_blank" rel="noopener noreferrer" style={{color: "#000"}}>News Page</a>
+                    </Button>
+                    <Button style={{color: "#FFF", backgroundColor: article.isSaved ? "red" : "blue"}} className="ms-2" onClick={() => handleSave(article)}>
+                      {article.isSaved ? "Unsave" : "Save"}
+                    </Button>
+                    <div className={`animate__animated ${article.isSaved ? "animate__heartBeat" : ""}`}>
+                      <i className={`bi bi-heart ${article.isSaved ? "text-danger" : ""}`}></i>
+                    </div>
+                  </div>
+                </Col>
+              );
+            })}
+          </Row>
         </Container>
-        </div>
-      );
-};
+      </div>
+    );
+  };
     
 export default Covid19;
