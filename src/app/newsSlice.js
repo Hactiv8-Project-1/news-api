@@ -4,6 +4,7 @@ import { getData } from '../utils/getData'
 const initialState = {
   newsData: {},
   savedArticles: JSON.parse(localStorage.getItem('savedArticles')) || [],
+  keySearch: '',
 }
 
 const newsSlice = createSlice({
@@ -31,7 +32,10 @@ const newsSlice = createSlice({
         const isArticleSaved = state.savedArticles.some(savedArticle => savedArticle.title === data.title)
         data.isSaved = isArticleSaved
       })
-    }
+    },
+    onHandleKey: (state, action) => {
+      state.keySearch = action.payload
+    },
   },
   extraReducers(builder) {
     builder.addCase(getData.fulfilled, (state, action) => {
@@ -44,5 +48,5 @@ const newsSlice = createSlice({
   }
 })
 
-export const { onHandleSave, onHandleRemove } = newsSlice.actions
+export const { onHandleSave, onHandleRemove, onHandleKey } = newsSlice.actions
 export default newsSlice.reducer

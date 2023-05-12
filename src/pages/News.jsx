@@ -16,7 +16,7 @@ export const News = ({ title, params }) => {
   return (
     <div>
       <Container>
-        <h1 className='text-center'>{title}</h1>
+        <h1 className='text-center'>{title} News</h1>
         <hr />
         <Row>
           {newsData.articles && newsData.articles.map((article) => {
