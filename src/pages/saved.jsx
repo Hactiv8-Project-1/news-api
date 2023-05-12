@@ -1,26 +1,15 @@
-import { useState, useEffect } from "react";
-import { Container, Table, Button } from "react-bootstrap";
+import { Container, Table, Button } from 'react-bootstrap'
+import { onHandleRemove } from '../app/newsSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
-const Saved = () => {
-  const [savedArticles, setSavedArticles] = useState([]);
-
-  useEffect(() => {
-    const savedArticlesData = JSON.parse(localStorage.getItem('savedArticles'));
-    if (savedArticlesData) {
-      setSavedArticles(savedArticlesData);
-    }
-  }, []);
-
-  const handleRemove = (article) => {
-    const updatedSavedArticles = savedArticles.filter((a) => a.title !== article.title);
-    setSavedArticles(updatedSavedArticles);
-    localStorage.setItem('savedArticles', JSON.stringify(updatedSavedArticles));
-  }
+export const Saved = () => {
+  const savedArticles = useSelector(state => state.news.savedArticles)
+  const dispatch = useDispatch()
 
   return (
     <div>
       <Container>
-        <h1 style={{textAlign: "center"}}>Saved Articles</h1> 
+        <h1 className='text-center'>Saved Articles</h1>
         <hr />
         <Table hover borderless>
           <thead>
@@ -28,7 +17,7 @@ const Saved = () => {
               <th>Source</th>
               <th>Title</th>
               <th>Description</th>
-              <th></th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -38,8 +27,8 @@ const Saved = () => {
                 <td>{article.title}</td>
                 <td>{article.description}</td>
                 <td>
-                  <Button variant="info" href={article.url} target="_blank" rel="noopener noreferrer">News Page</Button>{' '}
-                  <Button variant="danger" onClick={() => handleRemove(article)}>Remove</Button>
+                  <Button variant='info' href={article.url} target='_blank' rel='noopener noreferrer'>News Page</Button>{' '}
+                  <Button variant='danger' onClick={() => dispatch(onHandleRemove(article))}>Remove</Button>
                 </td>
               </tr>
             ))}
@@ -47,7 +36,5 @@ const Saved = () => {
         </Table>
       </Container>
     </div>
-  );
-};
-
-export default Saved;
+  )
+}

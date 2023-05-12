@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { NavBar } from './components/Navbar'
-import Saved from './pages/saved'
+import { Saved } from './pages/saved'
 import { News } from './pages/News'
 import './App.css'
 
