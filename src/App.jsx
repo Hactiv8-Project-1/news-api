@@ -1,31 +1,21 @@
-
-import './App.css'
+import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import NavBar from './components/navbar';
-import Indonesia from './pages/indonesia';
-import Covid19 from './pages/covid-19';
-import Programming from './pages/programming';
-import Saved from './pages/saved';
+import { NavBar } from './components/Navbar'
+import Saved from './pages/saved'
+import { News } from './pages/News'
+import './App.css'
+import React from 'react'
 
-function App() {
-
+export const App = () => {
   return (
-    <>
-    <div>
     <Router>
-        <NavBar/>
-        <Routes>
-        <Route path="/" element={<Indonesia />} />
-        <Route path="/covid-19" element={<Covid19 />} />
-        <Route path="/programming" element={<Programming />} />
-        <Route path="/saved" element={<Saved />} />
-        </Routes>
-
-      </Router>
-    </div>
-
-    </>
+      <NavBar />
+      <Routes>
+        <Route path='/' element={<News title='Indonesia News' params='/top-headlines?country=id' />} />
+        <Route path='/covid-19' element={<News title='Covid-19 News' params='/everything?q=covid-19' />} />
+        <Route path='/programming' element={<News title='Programming News' params='/everything?q=programming' />} />
+        <Route path='/saved' element={<Saved />} />
+      </Routes>
+    </Router>
   )
 }
-
-export default App

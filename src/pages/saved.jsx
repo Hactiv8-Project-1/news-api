@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Table, Button } from "react-bootstrap";
 
 const Saved = () => {
