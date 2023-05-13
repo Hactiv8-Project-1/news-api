@@ -14,10 +14,10 @@ export const Saved = () => {
         <Table hover borderless>
           <thead>
             <tr>
-              <th>Source</th>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Action</th>
+              <th className='col-lg-3 col-md-3'>Source</th>
+              <th className='col-lg-3 col-md-3'>Title</th>
+              <th className='col-lg-3 col-md-3'>Description</th>
+              <th className='col-lg-3 col-md-3'>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -26,9 +26,9 @@ export const Saved = () => {
                 <td>{article.source.name} ({article.author})</td>
                 <td>{article.title}</td>
                 <td>{article.description}</td>
-                <td>
-                  <Button variant='info' href={article.url} target='_blank' rel='noopener noreferrer'>News Page</Button>{' '}
-                  <Button variant='danger' onClick={() => dispatch(onHandleRemove(article))}>Remove</Button>
+                <td className='d-flex flex-wrap'>
+                  <Button className='col-lg-5 m-1' variant='info' href={article.url} target='_blank' rel='noopener noreferrer'>News Page</Button>{' '}
+                  <Button className='col-lg-5 m-1' variant='danger' onClick={() => dispatch(onHandleRemove(article))}>Remove</Button>
                 </td>
               </tr>
             ))}
