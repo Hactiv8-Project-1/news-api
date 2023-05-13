@@ -5,6 +5,15 @@
   text-align: center;
 } */
 
+.nav-link {
+  color: #fff !important;
+}
+
+.active {
+  background-color: transparent !important;
+  color: #FFC107 !important;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

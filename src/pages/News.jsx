@@ -16,19 +16,16 @@ export const News = ({ title, params }) => {
   }, [params, searchParams])
 
   return (
-    <div>
-      <Container>
-        <h1 className='text-center'>{title || searchParams.keySearch} News</h1>
-        <hr />
-        <Row>
-          {newsData.articles && newsData.articles.map((article) => {
-            return (
-              <NewsItem article={article} key={article.title} />
-            )
-          })}
-        </Row>
-      </Container>
-    </div>
+    <Container className='pt-5'>
+      <h1 className='text-center border-bottom pt-4 pb-3 mb-4'>{title || searchParams.keySearch} News</h1>
+      <Row>
+        {newsData.articles && newsData.articles.map((article) => {
+          return (
+            <NewsItem article={article} key={article.title} />
+          )
+        })}
+      </Row>
+    </Container>
   )
 }
 

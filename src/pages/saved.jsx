@@ -7,10 +7,9 @@ export const Saved = () => {
   const dispatch = useDispatch()
 
   return (
-    <div>
-      <Container>
-        <h1 className='text-center'>Saved Articles</h1>
-        <hr />
+    <Container className='pt-5'>
+      <h1 className='text-center border-bottom pt-4 pb-3 mb-4'>Saved Articles</h1>
+      <div className="overflow-auto">
         <Table hover borderless>
           <thead>
             <tr>
@@ -25,16 +24,18 @@ export const Saved = () => {
               <tr key={article.title}>
                 <td>{article.source.name} ({article.author})</td>
                 <td>{article.title}</td>
-                <td>{article.description}</td>
-                <td className='d-flex flex-wrap'>
-                  <Button className='col-lg-5 m-1' variant='info' href={article.url} target='_blank' rel='noopener noreferrer'>News Page</Button>{' '}
-                  <Button className='col-lg-5 m-1' variant='danger' onClick={() => dispatch(onHandleRemove(article))}>Remove</Button>
+                <td>{article.description?.slice(0, 110)}...</td>
+                <td>
+                  <div className='d-flex flex-wrap'>
+                    <Button className='col-lg-5 m-1' variant='info' href={article.url} target='_blank' rel='noopener noreferrer'>News Page</Button>{' '}
+                    <Button className='col-lg-5 m-1' variant='danger' onClick={() => dispatch(onHandleRemove(article))}>Remove</Button>
+                  </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
-      </Container>
-    </div>
+      </div>
+    </Container>
   )
 }
