@@ -4,16 +4,30 @@ import { Container, Row } from 'react-bootstrap'
 import { NewsItem } from '../components/NewsItem'
 import { getData } from '../utils/getData'
 import PropTypes from 'prop-types'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
+import { onScrollTobottom } from '../utils/onScrollTobottom'
 
 export const News = ({ title, params }) => {
   const newsData = useSelector(state => state.news.newsData)
+  const pageSize = useSelector(state => state.page.pageSize)
+  const page = useSelector(state => state.page.page)
+  const windowHeight = useSelector(state => state.page.windowHeight)
+  const activeKey = useLocation().pathname
   const searchParams = useParams()
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getData(params || `/everything?q=${searchParams.keySearch}`))
-  }, [params, searchParams])
+    onScrollTobottom(windowHeight, dispatch)
+    const q = activeKey == '/'
+      ? `/top-headlines?country=id&q=${searchParams.keySearch}`
+      : `/everything?q=${searchParams.keySearch}`
+    const reqParams = {
+      q: params || q,
+      pageSize: pageSize,
+      page: page
+    }
+    dispatch(getData(reqParams))
+  }, [params, searchParams, pageSize, page])
 
   return (
     <Container className='pt-5'>

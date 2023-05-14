@@ -7,6 +7,7 @@ import { getData } from '../utils/getData'
 import { NavItem } from './NavItem'
 import { scrollToTop } from '../utils/scrollToTop'
 import { useState } from 'react'
+import { onHandleNewPage } from '../app/pageSlice'
 
 export const NavBar = () => {
   const keySearch = useSelector(state => state.news.keySearch)
@@ -20,8 +21,18 @@ export const NavBar = () => {
   const handleSearch = (e) => {
     e.preventDefault()
     if (keySearch) {
-      dispatch(getData(`/everything?q=${keySearch}`))
+      const q = activeKey == '/'
+        ? `/top-headlines?country=id&q=${keySearch}`
+        : `/everything?q=${keySearch}`
+      const reqParams = {
+        q: q,
+        pageSize: 20,
+        page: 1
+      }
+      dispatch(onHandleNewPage())
+      dispatch(getData(reqParams))
       navigate(`search/${keySearch}`)
+      scrollToTop()
     }
   }
 
