@@ -1,10 +1,9 @@
-import { Container, Table, Button } from 'react-bootstrap'
-import { onHandleRemove } from '../app/newsSlice'
-import { useDispatch, useSelector } from 'react-redux'
+import { Container, Table } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
+import { SavedItem } from '../components/SavedItem'
 
 export const Saved = () => {
   const savedArticles = useSelector(state => state.news.savedArticles)
-  const dispatch = useDispatch()
 
   return (
     <Container className='pt-5'>
@@ -21,17 +20,7 @@ export const Saved = () => {
           </thead>
           <tbody>
             {savedArticles && savedArticles.map((article) => (
-              <tr key={article.title}>
-                <td>{article.source.name} ({article.author})</td>
-                <td>{article.title}</td>
-                <td>{article.description?.slice(0, 110)}...</td>
-                <td>
-                  <div className='d-flex flex-wrap'>
-                    <Button className='col-lg-5 m-1' variant='info' href={article.url} target='_blank' rel='noopener noreferrer'>News Page</Button>{' '}
-                    <Button className='col-lg-5 m-1' variant='danger' onClick={() => dispatch(onHandleRemove(article))}>Remove</Button>
-                  </div>
-                </td>
-              </tr>
+              <SavedItem article={article} key={article.title} />
             ))}
           </tbody>
         </Table>
